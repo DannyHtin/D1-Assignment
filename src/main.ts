@@ -10,52 +10,63 @@ document.body.append(counterDisplay);
 const growthRateDisplay: HTMLDivElement = document.createElement("div");
 document.body.append(growthRateDisplay);
 
-const itemCountsDisplay: HTMLDivElement = document.createElement("div");
-document.body.append(itemCountsDisplay);
+interface Item {
+  name: string;
+  baseCost: number;
+  currentCost: number;
+  rate: number;
+  count: number;
+  button: HTMLButtonElement;
+  display: HTMLParagraphElement;
+}
 
-clickButton.addEventListener("click", () => {
-  counter++;
-});
+const availableItems: Item[] = [
+  {
+    name: "Overclocker",
+    baseCost: 10,
+    rate: 0.1,
+    count: 0,
+    currentCost: 10,
+    button: document.createElement("button"),
+    display: document.createElement("p"),
+  },
+  {
+    name: "Quantum Bit",
+    baseCost: 100,
+    rate: 2,
+    count: 0,
+    currentCost: 100,
+    button: document.createElement("button"),
+    display: document.createElement("p"),
+  },
+  {
+    name: "AI Core",
+    baseCost: 1000,
+    rate: 50,
+    count: 0,
+    currentCost: 1000,
+    button: document.createElement("button"),
+    display: document.createElement("p"),
+  },
+];
 
 const priceIncreaseFactor = 1.15;
 
-let costA = 10;
-const rateA = 0.1;
-let countA = 0;
-const buttonA: HTMLButtonElement = document.createElement("button");
-document.body.append(buttonA);
-buttonA.addEventListener("click", () => {
-  if (counter >= costA) {
-    counter -= costA;
-    countA++;
-    costA *= priceIncreaseFactor;
-  }
+availableItems.forEach((item) => {
+  document.body.append(item.button);
+  document.body.append(item.display);
+
+  item.button.addEventListener("click", () => {
+    if (counter >= item.currentCost) {
+      counter -= item.currentCost;
+      item.count++;
+      item.currentCost *= priceIncreaseFactor;
+    }
+  });
 });
 
-let costB = 100;
-const rateB = 2.0;
-let countB = 0;
-const buttonB: HTMLButtonElement = document.createElement("button");
-document.body.append(buttonB);
-buttonB.addEventListener("click", () => {
-  if (counter >= costB) {
-    counter -= costB;
-    countB++;
-    costB *= priceIncreaseFactor;
-  }
-});
-
-let costC = 1000;
-const rateC = 50;
-let countC = 0;
-const buttonC: HTMLButtonElement = document.createElement("button");
-document.body.append(buttonC);
-buttonC.addEventListener("click", () => {
-  if (counter >= costC) {
-    counter -= costC;
-    countC++;
-    costC *= priceIncreaseFactor;
-  }
+clickButton.addEventListener("click", () => {
+  counter++;
 });
 
 let lastTimestamp: number = 0;
@@ -66,26 +77,22 @@ function gameLoop(timestamp: number) {
   const deltaTime = (timestamp - lastTimestamp) / 1000;
   lastTimestamp = timestamp;
 
-  const totalGrowthRate = (countA * rateA) + (countB * rateB) +
-    (countC * rateC);
+  let totalGrowthRate = 0;
+  availableItems.forEach((item) => {
+    totalGrowthRate += item.count * item.rate;
+    item.button.textContent = `Buy ${item.name} (Cost: ${
+      Math.ceil(item.currentCost)
+    })`;
+    item.button.disabled = counter < item.currentCost;
+    item.display.textContent = `${item.name}s: ${item.count}`;
+  });
+
   counter += totalGrowthRate * deltaTime;
 
   counterDisplay.textContent = `${Math.floor(counter)} Cycles`;
   growthRateDisplay.textContent = `Growth: ${
     totalGrowthRate.toFixed(1)
   } Cycles/sec`;
-  itemCountsDisplay.innerHTML = `
-        <p>Overclockers: ${countA}</p>
-        <p>Quantum Bits: ${countB}</p>
-        <p>AI Cores: ${countC}</p>
-    `;
-
-  buttonA.textContent = `Buy Overclocker (Cost: ${Math.ceil(costA)})`;
-  buttonA.disabled = counter < costA;
-  buttonB.textContent = `Buy Quantum Bit (Cost: ${Math.ceil(costB)})`;
-  buttonB.disabled = counter < costB;
-  buttonC.textContent = `Buy AI Core (Cost: ${Math.ceil(costC)})`;
-  buttonC.disabled = counter < costC;
 
   requestAnimationFrame(gameLoop);
 }
