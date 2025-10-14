@@ -1,10 +1,10 @@
 const clickButton: HTMLButtonElement = document.createElement("button");
-clickButton.textContent = "🚀";
+clickButton.textContent = "⚡";
 document.body.append(clickButton);
 
 let counter: number = 0;
 const counterDisplay: HTMLDivElement = document.createElement("div");
-counterDisplay.textContent = `${counter} Thrust`;
+counterDisplay.textContent = `${counter} Cycles`;
 document.body.append(counterDisplay);
 
 const growthRateDisplay: HTMLDivElement = document.createElement("div");
@@ -70,19 +70,21 @@ function gameLoop(timestamp: number) {
     (countC * rateC);
   counter += totalGrowthRate * deltaTime;
 
-  counterDisplay.textContent = `${Math.floor(counter)} Thrust`;
-  growthRateDisplay.textContent = `Growth: ${totalGrowthRate.toFixed(1)}/sec`;
+  counterDisplay.textContent = `${Math.floor(counter)} Cycles`;
+  growthRateDisplay.textContent = `Growth: ${
+    totalGrowthRate.toFixed(1)
+  } Cycles/sec`;
   itemCountsDisplay.innerHTML = `
-        <p>Item A: ${countA}</p>
-        <p>Item B: ${countB}</p>
-        <p>Item C: ${countC}</p>
+        <p>Overclockers: ${countA}</p>
+        <p>Quantum Bits: ${countB}</p>
+        <p>AI Cores: ${countC}</p>
     `;
 
-  buttonA.textContent = `Buy A (Cost: ${Math.ceil(costA)}, Rate: ${rateA}/s)`;
+  buttonA.textContent = `Buy Overclocker (Cost: ${Math.ceil(costA)})`;
   buttonA.disabled = counter < costA;
-  buttonB.textContent = `Buy B (Cost: ${Math.ceil(costB)}, Rate: ${rateB}/s)`;
+  buttonB.textContent = `Buy Quantum Bit (Cost: ${Math.ceil(costB)})`;
   buttonB.disabled = counter < costB;
-  buttonC.textContent = `Buy C (Cost: ${Math.ceil(costC)}, Rate: ${rateC}/s)`;
+  buttonC.textContent = `Buy AI Core (Cost: ${Math.ceil(costC)})`;
   buttonC.disabled = counter < costC;
 
   requestAnimationFrame(gameLoop);
