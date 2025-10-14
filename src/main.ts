@@ -17,42 +17,44 @@ clickButton.addEventListener("click", () => {
   counter++;
 });
 
-const costA = 10;
+const priceIncreaseFactor = 1.15;
+
+let costA = 10;
 const rateA = 0.1;
 let countA = 0;
 const buttonA: HTMLButtonElement = document.createElement("button");
-buttonA.textContent = `Buy A (Cost: ${costA}, Rate: ${rateA}/s)`;
 document.body.append(buttonA);
 buttonA.addEventListener("click", () => {
   if (counter >= costA) {
     counter -= costA;
     countA++;
+    costA *= priceIncreaseFactor;
   }
 });
 
-const costB = 100;
+let costB = 100;
 const rateB = 2.0;
 let countB = 0;
 const buttonB: HTMLButtonElement = document.createElement("button");
-buttonB.textContent = `Buy B (Cost: ${costB}, Rate: ${rateB}/s)`;
 document.body.append(buttonB);
 buttonB.addEventListener("click", () => {
   if (counter >= costB) {
     counter -= costB;
     countB++;
+    costB *= priceIncreaseFactor;
   }
 });
 
-const costC = 1000;
+let costC = 1000;
 const rateC = 50;
 let countC = 0;
 const buttonC: HTMLButtonElement = document.createElement("button");
-buttonC.textContent = `Buy C (Cost: ${costC}, Rate: ${rateC}/s)`;
 document.body.append(buttonC);
 buttonC.addEventListener("click", () => {
   if (counter >= costC) {
     counter -= costC;
     countC++;
+    costC *= priceIncreaseFactor;
   }
 });
 
@@ -76,8 +78,11 @@ function gameLoop(timestamp: number) {
         <p>Item C: ${countC}</p>
     `;
 
+  buttonA.textContent = `Buy A (Cost: ${Math.ceil(costA)}, Rate: ${rateA}/s)`;
   buttonA.disabled = counter < costA;
+  buttonB.textContent = `Buy B (Cost: ${Math.ceil(costB)}, Rate: ${rateB}/s)`;
   buttonB.disabled = counter < costB;
+  buttonC.textContent = `Buy C (Cost: ${Math.ceil(costC)}, Rate: ${rateC}/s)`;
   buttonC.disabled = counter < costC;
 
   requestAnimationFrame(gameLoop);
