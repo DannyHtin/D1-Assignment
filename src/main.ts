@@ -11,7 +11,20 @@ clickButton.addEventListener("click", () => {
   counter++;
 });
 
-let growthRatePerSecond: number = 1;
+let growthRatePerSecond: number = 0;
+const upgradeCost: number = 10;
+
+const upgradeButton: HTMLButtonElement = document.createElement("button");
+upgradeButton.textContent = `Add Booster (Cost: ${upgradeCost})`;
+document.body.append(upgradeButton);
+
+upgradeButton.addEventListener("click", () => {
+  if (counter >= upgradeCost) {
+    counter -= upgradeCost;
+    growthRatePerSecond++;
+  }
+});
+
 let lastTimestamp: number = 0;
 
 function gameLoop(timestamp: number) {
@@ -23,6 +36,8 @@ function gameLoop(timestamp: number) {
 
   counter += growthRatePerSecond * deltaTime;
   counterDisplay.textContent = `${Math.floor(counter)} Thrust`;
+
+  upgradeButton.disabled = counter < upgradeCost;
 
   requestAnimationFrame(gameLoop);
 }
