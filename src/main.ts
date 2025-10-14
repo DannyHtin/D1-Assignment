@@ -11,3 +11,8 @@ clickButton.addEventListener("click", () => {
   counter++;
   counterDisplay.textContent = `${counter} Thrust`;
 });
+
+setInterval(() => {
+  counter++;
+  counterDisplay.textContent = `${counter} Thrust`;
+}, 1000);
