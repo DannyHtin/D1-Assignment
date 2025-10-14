@@ -9,10 +9,22 @@ document.body.append(counterDisplay);
 
 clickButton.addEventListener("click", () => {
   counter++;
-  counterDisplay.textContent = `${counter} Thrust`;
 });
 
-setInterval(() => {
-  counter++;
-  counterDisplay.textContent = `${counter} Thrust`;
-}, 1000);
+let growthRatePerSecond: number = 1;
+let lastTimestamp: number = 0;
+
+function gameLoop(timestamp: number) {
+  if (lastTimestamp === 0) {
+    lastTimestamp = timestamp;
+  }
+  const deltaTime = (timestamp - lastTimestamp) / 1000;
+  lastTimestamp = timestamp;
+
+  counter += growthRatePerSecond * deltaTime;
+  counterDisplay.textContent = `${Math.floor(counter)} Thrust`;
+
+  requestAnimationFrame(gameLoop);
+}
+
+requestAnimationFrame(gameLoop);
