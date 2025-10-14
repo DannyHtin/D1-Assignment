@@ -12,6 +12,7 @@ document.body.append(growthRateDisplay);
 
 interface Item {
   name: string;
+  description: string;
   baseCost: number;
   currentCost: number;
   rate: number;
@@ -23,6 +24,7 @@ interface Item {
 const availableItems: Item[] = [
   {
     name: "Overclocker",
+    description: "Pushes your CPU a little harder.",
     baseCost: 10,
     rate: 0.1,
     count: 0,
@@ -32,6 +34,7 @@ const availableItems: Item[] = [
   },
   {
     name: "Quantum Bit",
+    description: "Harnesses spooky action at a distance.",
     baseCost: 100,
     rate: 2,
     count: 0,
@@ -41,10 +44,31 @@ const availableItems: Item[] = [
   },
   {
     name: "AI Core",
+    description: "A thinking machine to optimize cycle generation.",
     baseCost: 1000,
     rate: 50,
     count: 0,
     currentCost: 1000,
+    button: document.createElement("button"),
+    display: document.createElement("p"),
+  },
+  {
+    name: "Neural Network",
+    description: "Connects processors like a digital brain.",
+    baseCost: 12000,
+    rate: 250,
+    count: 0,
+    currentCost: 12000,
+    button: document.createElement("button"),
+    display: document.createElement("p"),
+  },
+  {
+    name: "Singularity",
+    description: "Transcends the limits of computation.",
+    baseCost: 150000,
+    rate: 1400,
+    count: 0,
+    currentCost: 150000,
     button: document.createElement("button"),
     display: document.createElement("p"),
   },
@@ -54,6 +78,9 @@ const priceIncreaseFactor = 1.15;
 
 availableItems.forEach((item) => {
   document.body.append(item.button);
+  const descriptionElement = document.createElement("small");
+  descriptionElement.textContent = item.description;
+  document.body.append(descriptionElement);
   document.body.append(item.display);
 
   item.button.addEventListener("click", () => {
