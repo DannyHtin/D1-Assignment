@@ -3,13 +3,19 @@ const clickButton: HTMLButtonElement = document.createElement("button");
 clickButton.textContent = "⚡";
 document.body.append(clickButton);
 
-let counter: number = 0;
 const counterDisplay: HTMLDivElement = document.createElement("div");
-counterDisplay.textContent = `${counter} Cycles`;
 document.body.append(counterDisplay);
 
 const growthRateDisplay: HTMLDivElement = document.createElement("div");
 document.body.append(growthRateDisplay);
+
+// Game State
+let cycleCount: number = 0;
+let lastTimestamp: number = 0;
+const priceIncreaseFactor = 1.15;
+
+// Initialize display
+counterDisplay.textContent = `${cycleCount} Cycles`;
 
 // Item Definitions
 interface Item {
@@ -23,7 +29,7 @@ interface Item {
   display: HTMLParagraphElement;
 }
 
-const availableItems: Item[] = [
+const upgradeItems: Item[] = [
   {
     name: "Overclocker",
     description: "Pushes your CPU a little harder.",
@@ -76,10 +82,8 @@ const availableItems: Item[] = [
   },
 ];
 
-const priceIncreaseFactor = 1.15;
-
 // Initialization & Event Listeners
-availableItems.forEach((item) => {
+upgradeItems.forEach((item) => {
   document.body.append(item.button);
   const descriptionElement = document.createElement("small");
   descriptionElement.textContent = item.description;
@@ -87,8 +91,8 @@ availableItems.forEach((item) => {
   document.body.append(item.display);
 
   item.button.addEventListener("click", () => {
-    if (counter >= item.currentCost) {
-      counter -= item.currentCost;
+    if (cycleCount >= item.currentCost) {
+      cycleCount -= item.currentCost;
       item.count++;
       item.currentCost *= priceIncreaseFactor;
     }
@@ -96,11 +100,10 @@ availableItems.forEach((item) => {
 });
 
 clickButton.addEventListener("click", () => {
-  counter++;
+  cycleCount++;
 });
 
 // Game Loop
-let lastTimestamp: number = 0;
 function gameLoop(timestamp: number) {
   if (lastTimestamp === 0) {
     lastTimestamp = timestamp;
@@ -109,18 +112,18 @@ function gameLoop(timestamp: number) {
   lastTimestamp = timestamp;
 
   let totalGrowthRate = 0;
-  availableItems.forEach((item) => {
+  upgradeItems.forEach((item) => {
     totalGrowthRate += item.count * item.rate;
     item.button.textContent = `Buy ${item.name} (Cost: ${
       Math.ceil(item.currentCost)
     })`;
-    item.button.disabled = counter < item.currentCost;
+    item.button.disabled = cycleCount < item.currentCost;
     item.display.textContent = `${item.name}s: ${item.count}`;
   });
 
-  counter += totalGrowthRate * deltaTime;
+  cycleCount += totalGrowthRate * deltaTime;
 
-  counterDisplay.textContent = `${Math.floor(counter)} Cycles`;
+  counterDisplay.textContent = `${Math.floor(cycleCount)} Cycles`;
   growthRateDisplay.textContent = `Growth: ${
     totalGrowthRate.toFixed(1)
   } Cycles/sec`;
