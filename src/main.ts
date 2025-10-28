@@ -1,3 +1,4 @@
+// DOM Elements
 const clickButton: HTMLButtonElement = document.createElement("button");
 clickButton.textContent = "⚡";
 document.body.append(clickButton);
@@ -10,6 +11,7 @@ document.body.append(counterDisplay);
 const growthRateDisplay: HTMLDivElement = document.createElement("div");
 document.body.append(growthRateDisplay);
 
+// Item Definitions
 interface Item {
   name: string;
   description: string;
@@ -76,6 +78,7 @@ const availableItems: Item[] = [
 
 const priceIncreaseFactor = 1.15;
 
+// Initialization & Event Listeners
 availableItems.forEach((item) => {
   document.body.append(item.button);
   const descriptionElement = document.createElement("small");
@@ -96,6 +99,7 @@ clickButton.addEventListener("click", () => {
   counter++;
 });
 
+// Game Loop
 let lastTimestamp: number = 0;
 function gameLoop(timestamp: number) {
   if (lastTimestamp === 0) {
@@ -124,4 +128,5 @@ function gameLoop(timestamp: number) {
   requestAnimationFrame(gameLoop);
 }
 
+// Game Start
 requestAnimationFrame(gameLoop);
