@@ -17,7 +17,7 @@ const priceIncreaseFactor = 1.15;
 // Initialize display
 counterDisplay.textContent = `${cycleCount} Cycles`;
 
-// Item Definitions
+//  Item Definitions
 interface Item {
   name: string;
   description: string;
@@ -82,6 +82,11 @@ const upgradeItems: Item[] = [
   },
 ];
 
+// Helper Functions
+const formatCost = (cost: number): number => {
+  return Math.ceil(cost);
+};
+
 // Initialization & Event Listeners
 upgradeItems.forEach((item) => {
   document.body.append(item.button);
@@ -115,7 +120,7 @@ function gameLoop(timestamp: number) {
   upgradeItems.forEach((item) => {
     totalGrowthRate += item.count * item.rate;
     item.button.textContent = `Buy ${item.name} (Cost: ${
-      Math.ceil(item.currentCost)
+      formatCost(item.currentCost)
     })`;
     item.button.disabled = cycleCount < item.currentCost;
     item.display.textContent = `${item.name}s: ${item.count}`;
