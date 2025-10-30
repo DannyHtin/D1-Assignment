@@ -1,5 +1,111 @@
-.icon {
-  width: 64px;
-  vertical-align: top;
-  border: 1px solid salmon;
+/* --- Global Styles --- */
+body {
+  font-family:
+    -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial,
+    sans-serif;
+  background: linear-gradient(120deg, #fffbe0 0%, #fff2c7 100%);
+  display: grid;
+  place-items: center;
+  min-height: 100vh;
+  color: #333;
 }
+
+/* --- Credit Comment --- */
+/* Inspired by "Frog Clicker" https://github.com/mgembree/cmpm-121-f25-mattembree
+   for the central card-like container. */
+.game-container {
+  width: 90%;
+  max-width: 600px;
+  background: rgba(255, 255, 255, 0.85);
+  border-radius: 16px;
+  box-shadow: 0 8px 32px 0 rgba(135, 116, 31, 0.15);
+  backdrop-filter: blur(4px);
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  padding: 24px;
+  text-align: center;
+}
+/* --- End Credit --- */
+
+h1 {
+  margin-top: 0;
+  color: #222;
+}
+
+/* --- Credit Comment --- */
+/* Inspired by "Frog Clicker" https://github.com/mgembree/cmpm-121-f25-mattembree
+   for the single, combined stats bar. */
+.stats-bar {
+  display: flex;
+  justify-content: space-between;
+  background: #fffacd;
+  padding: 12px 16px;
+  border-radius: 8px;
+  margin-bottom: 20px;
+  font-weight: 500;
+  font-size: 1.1em;
+}
+/* --- End Credit --- */
+
+/* --- Credit Comment --- */
+/* Inspired by "The Bee Empire" https://github.com/AngelCasta34/cmpm-121-f25-d1-AngelCastaneda
+   for a large, central, visual clicker element. */
+#click-button {
+  font-size: 5rem;
+  width: 150px;
+  height: 150px;
+  border-radius: 50%;
+  border: none;
+  background: #fde84a;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  cursor: pointer;
+  transition: transform 0.1s ease;
+}
+
+#click-button:active {
+  transform: scale(0.95);
+}
+/* --- End Credit --- */
+
+/* --- Credit Comment --- */
+/* Inspired by "The Bee Empire" https://github.com/AngelCasta34/cmpm-121-f25-d1-AngelCastaneda
+   for the clear "Button -> Owned -> Description" layout. */
+.upgrade-container {
+  background: rgba(255, 252, 230, 0.8);
+  border-radius: 8px;
+  padding: 16px;
+  margin-top: 16px;
+  text-align: left;
+}
+
+.upgrade-container button {
+  width: 100%;
+  font-size: 1em;
+  padding: 12px;
+  background-color: #f7d000;
+  color: #222;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: background-color 0.2s ease;
+}
+
+.upgrade-container button:hover:not(:disabled) {
+  background-color: #e3c000;
+}
+
+.upgrade-container button:disabled {
+  background-color: #b0b0b0;
+  color: #777;
+  cursor: not-allowed;
+}
+
+.upgrade-container p {
+  font-weight: 600;
+  margin: 10px 0 4px;
+}
+
+.upgrade-container small {
+  color: #555;
+}
+/* --- End Credit --- */
